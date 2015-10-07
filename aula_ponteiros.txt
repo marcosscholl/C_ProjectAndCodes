@@ -1,0 +1,119 @@
+strchr = procura um caracter
+strstr = procura uma string
+
+char *strchr(char *s, int c)
+//procura o caracter c na string s da esquerda para a direita
+
+char *strstr(char *s, char *q);
+//procura a string q na string s da esquerda para a direita
+
+char s[101];
+strcpy(s,"betito bonitao mais lindao de todos");
+
+//se o conteúdo do ponteiro s está na posição 1000:
+printf("%d",strchr(s,'X')); //NULL
+printf("%d",strchr(s,' ')); //1006
+printf("%d",strchr(s,' ')-s); //6
+printf("%d",strstr(s,"XUXA")); //NULL
+printf("%d",strstr(s," ")); //1006
+printf("%d",strstr(s,"bonitao")); //1007
+printf("%d",strstr(s,"bonitao")-s); //7
+
+char *p = strchr(s,' ');//primeiro espaço
+p = strchr(p+1,' ');//segundo espaço
+p = strchr(p+1,' ');//terceiro espaço
+...
+
+char *p = strstr(s,"to");//primeira ocorrência
+p = strstr(p+1,"to");//segunda ocorrência
+p = strstr(p+1,"to");//terceira ocorrência
+...
+
+char r[101],s[101];
+strcpy(r,"betito bonitao mais lindao de todos");
+
+strcpy(s,r);//"betito bonitao mais lindao de todos"
+strcpy(s,r+7);//"bonitao mais lindao de todos"
+
+STRNCPY, STRNCAT, STRNCMP, ...
+
+strncpy(s,r+7,5);//"bonit" => SUBSTR!!!
+
+* NENHUM MÉTODO DE STRING ALOCA OU DESALOCA MEMÓRIA!!!
+
+char *a;
+strcpy(a,"abc"); //NÃO FAÇA ISSO!
+
+char r[5], s[5];
+strcpy(r,"abcd");
+strcpy(s,"1234");
+strcat(r,s); //NÃO FAÇA ISSO!
+
+* OS MÉTODOS DE STRING TRABALHAM COM O CONTEÚDO E NÃO COM O PONTEIRO
+
+char s1[101], s2[101];
+strcpy(s1,s2) não é a mesma coisa que s1 = s2!!!
+strcpy(s1,s2), s1 recebe uma cópia do conteúdo de s2
+s1 = s2, s1 recebe o endereço de memória para onde s2 aponta
+
+sprintf, sscanf
+
+printf("abc"); //mostra na tela
+scanf("%d",&n); //lê do teclado
+
+char s[101];
+int x = 15, y = 2;
+
+sprintf(s,"abc"); //strcpy(s,"abc")
+
+sprintf(s,"o valor de %d/%d e igual a %d",x,y,(x/y));
+//"o valor de 15/2 e igual a 7"
+
+sprintf(s,"%d",x); //"15"
+sscanf(s,"%d",&y); //15
+
+sprintf(s,"%x",x); //"f"
+
+char data[101];
+int d, m, a;
+strcpy(data,"10/12/1012");
+sscanf(data,"%d/%d/%d",&d,&m,&a);
+
+==================================================
+
+PONTEIROS PARA FUNÇÕES
+-----------------------------
+//sem parametros, sem retorno
+
+void desenha_circulo() {}
+void desenha_quadrado() {}
+void desenha_losango() {}
+
+void (*fdesenha)(); //declaração
+
+fdesenha = desenha_circulo; //atribuição
+
+(*fdesenha)(); //chamada da função
+
+//com parâmetros, sem retorno
+
+void desenha_circulo(int a, char *b) {}
+void desenha_quadrado(int a, char *b) {}
+
+void (*fdesenha)(int, char *); //declaração
+
+fdesenha = desenha_circulo; //atribuição
+
+(*fdesenha)(x,y); //chamada da função
+
+//com retorno
+
+float desenha_circulo(int a, char *b) {}
+float desenha_quadrado(int a, char *b) {}
+
+float (*fdesenha)(int, char *); //declaração
+
+fdesenha = desenha_circulo; //atribuição
+
+float z = (*fdesenha)(x,y); //chamada da função
+
